@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+		<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+		<title> GPA-SignUp </title>
+		<script>
+      		// let password = [];
+      
+			function openImageModal(image) {	
+				// for accessing the style.border 
+        		mainImgEle = document.getElementById(image);
+				if (document.getElementById(image).style.borderColor == 'green') {
+					document.getElementById(image).style.removeProperty('border');
+					document.getElementById("imgPwd").value = null;
+					return;
+				}
+				// Create the modal element
+				let modal = document.createElement('div');
+			
+				modal.style.display = 'block';
+				modal.style.position = 'fixed';
+				modal.style.zIndex = '1';
+				modal.style.left = '0';
+				modal.style.top = '0';
+				modal.style.width = '100%';
+				modal.style.height = '100%';
+				modal.style.overflow = 'auto';
+				modal.style.backgroundColor = 'rgba(0,0,0,0.4)';
+
+				// Create the modal content element
+				let modalContent = document.createElement('div');
+				modalContent.style.backgroundColor = '#fefefe';
+				modalContent.style.margin = '15% auto';
+				modalContent.style.padding = '50px 50px 50px 50px';
+				modalContent.style.border = '4px solid blue';
+				modalContent.style.width = '80%';
+
+				// Create the table element
+				let table = document.createElement('table');
+				table.style.margin = '0 auto';
+				let pixels = [];
+				for (let i = 0; i < 3; i++) 
+				{
+					let row = table.insertRow(i);
+					for (let j = 0; j < 3; j++) 
+					{
+						let cell = row.insertCell(j);
+						let imgElem = document.createElement('img');
+						let loc = '/static/'.concat((9+parseInt(image.slice(3))).toString(), "/").concat((10 - (i*3 + j + 1)).toString(), '.jpg');
+						imgElem.src = loc ; // Set the image source
+						imgElem.alt = `Image ${i * 3 + j + 1}`;
+						imgElem.id = (9+parseInt(image.slice(3))).toString() + `SI${10-(i * 3 + j + 1)}`;
+						imgElem.onclick = function() {
+							if (pixels.includes(imgElem.id)) 
+							{
+								pixels = pixels.filter(item => item !== imgElem.id);
+								imgElem.style.border = "none";
+							}else{
+								pixels.push(imgElem.id);
+								imgElem.style.border = "5px solid green";
+							}
+						};
+						cell.appendChild(imgElem);
+					}
+				}
+        modalContent.appendChild(table);
+		/* Add some styling to the modal */
+		modalContent.style.maxWidth = '500px';
+		modalContent.style.borderRadius = '10px';
+		modalContent.style.boxShadow = '0 2px 4px rgba(0,0,0,0.2)';
+
+		/* Add some styling to the table */
+		table.style.borderCollapse = 'collapse';
+		table.style.width = '80%';
+
+		/* Add some spacing between the table cells */
+		table.querySelectorAll('td').forEach(td => {
+		td.style.padding = '1px';
+		});
+
+		/* Add a border around the table cells */
+		table.querySelectorAll('td').forEach(td => {
+		td.style.border = '1px solid #ccc';
+		});
+
+		/* Add some styling to the images */
+		table.querySelectorAll('img').forEach(img => {
+		img.style.width = '100px';
+		img.style.height = '100px';
+		img.style.objectFit = 'cover';
+		img.style.borderRadius = '10px';
+		img.style.boxShadow = '0 2px 4px rgba(0,0,0,0.2)';
+		img.style.transition = 'transform 0.2s';
+		});
+
+		/* Add a hover effect to the images */
+		table.querySelectorAll('img').forEach(img => {
+		img.addEventListener('mouseover', () => {
+			img.style.transform = 'scale(1.1)';
+			img.style.boxShadow = '0 4px 8px rgba(0,0,0,0.4)';
+		});
+		img.addEventListener('mouseout', () => {
+			img.style.transform = 'scale(1)';
+			img.style.boxShadow = '0 2px 4px rgba(0,0,0,0.2)';
+		});
+		});
+
+        let submitButton = document.createElement('button');
+        submitButton.innerHTML = 'Submit';
+        submitButton.onclick = function() {
+          if( pixels != 0) {
+            // console.log("el "+ document.getElementById('imgPwd').value)
+            pixels = document.getElementById('imgPwd').value + ',' + pixels;
+            // console.log("s "+ pixels)
+            document.getElementById('imgPwd').value = pixels;
+            modal.style.display = "none";
+            mainImgEle.style.border = "8px solid green";
+          }     
+        }
+        
+        // Create the cancel button
+        let cancelButton = document.createElement('button');
+        cancelButton.innerHTML = 'Cancel';
+        cancelButton.onclick = function() {
+        pixels.length = 0;
+        modal.style.display = "none";
+        };
+
+		/* Add some styling to the submit button */
+		submitButton.style.backgroundColor = '#4CAF50';
+		submitButton.style.color = 'white';
+		submitButton.style.padding = '12px 20px';
+		submitButton.style.border = 'none';
+		submitButton.style.borderRadius = '4px';
+		submitButton.style.cursor = 'pointer';
+		submitButton.style.marginRight = '10px';
+
+		/* Add a hover effect to the submit button */
+		submitButton.addEventListener('mouseover', () => {
+		submitButton.style.backgroundColor = '#3e8e41';
+		});
+		submitButton.addEventListener('mouseout', () => {
+		submitButton.style.backgroundColor = '#4CAF50';
+		});
+
+		/* Add some styling to the cancel button */
+		cancelButton.style.backgroundColor = '#f44336';
+		cancelButton.style.color = 'white';
+		cancelButton.style.padding = '12px 20px';
+		cancelButton.style.border = 'none';
+		cancelButton.style.borderRadius = '4px';
+		cancelButton.style.cursor = 'pointer';
+
+		/* Add a hover effect to the cancel button */
+		cancelButton.addEventListener('mouseover', () => {
+		cancelButton.style.backgroundColor = '#d32f2f';
+		});
+		cancelButton.addEventListener('mouseout', () => {
+		cancelButton.style.backgroundColor = '#f44336';
+		});
+
+        let buttonWrapper = document.createElement('div');
+		buttonWrapper.style.textAlign = 'center';
+		buttonWrapper.style.marginTop = '20px';
+		buttonWrapper.appendChild(submitButton);
+		buttonWrapper.appendChild(cancelButton);
+		modalContent.appendChild(buttonWrapper);
+
+
+				// Append the modal content to the modal
+				modal.appendChild(modalContent);
+
+				// Append the modal to the body
+				document.body.appendChild(modal);
+
+				// Close the modal when clicked outside of it
+				window.onclick = function(event) {
+					if (event.target == modal) {
+					modal.style.display = "none";
+					}
+				}
+			}
+		</script>
+		
+    <style>
+			body {
+			background-image: url('/static/background.jpg');
+			background-size: cover;
+			}
+
+			nav{
+				background:linear-gradient(to right, #8498bd, #2a5298);
+			}
+			
+			.container{
+				
+				background:linear-gradient(to right, #8498bd, #2a5298);
+				border-radius: 10px;
+				box-shadow: 0 14px 28px rgba(0,0,0,0.25), 
+						0 10px 10px rgba(0,0,0,0.22);
+				position: relative;
+				overflow: hidden;
+				width: 768px;
+				max-width: 100%;
+				min-height: 480px;
+				justify-content: center;
+			}
+			.form-container{
+				top: 0;
+				height: 100%;
+				transition: all 0.6s ease-in-out;
+				justify-content: center;
+				display: flex;
+			}
+			form {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+			}
+
+			input[type="email"], input[type="text"], input[type="password"] {
+				width: 85%;
+				padding: 12px 20px;
+				margin: 8px 0;
+				box-sizing: border-box;
+				border: 2px solid #ccc;
+				border-radius: 4px;
+				}
+
+			input[type="email"]:focus, input[type="text"]:focus {
+			border: 2px solid #4CAF50;
+			}
+
+			/* Add some spacing between the table cells */
+			#imageTable td {
+			  padding: 10px;
+			}
+		  
+			/* Add a border around the table cells */
+			#imageTable td {
+			  border: 1px solid #ccc;
+			}
+		  
+			/* Add some styling to the images */
+			#imageTable img {
+			  width: 100px;
+			  height: 100px;
+			  object-fit: cover;
+			  border-radius: 10px;
+			  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+			  transition: transform 0.2s;
+			}
+		  
+			/* Add a hover effect to the images */
+			#imageTable img:hover {
+			  transform: scale(1.1);
+			  box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+			}
+			#warning{
+				color: red;	
+			}
+    </style>
+	  </head>
+	  
+<body>
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<a class="navbar-brand" href="/">Graphical Password As 2-FA</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+		  <span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarNav">
+		  <ul class="navbar-nav">
+			<li class="nav-item">
+			  <a class="nav-link" href="/SignUp">Register</a>
+			</li>
+			<li class="nav-item">
+			  <a class="nav-link" href="/SignIn">Login</a>
+			</li>
+		  </ul>
+		</div>
+	</nav>
+	
+	<br><br>
+	  
+	<div  class="container" id="container">
+		<div class="form-container ">
+			
+			<form action="/register" method="post">
+				<h3>Register in GPA</h3>
+				{% if error %}
+					<h4 id="warning">{{ error }}</h4>
+				{% endif %}
+				<input type="email" id="email" name="email" placeholder="Email">
+				<input type="text" id="name" name="name" placeholder="Name">
+				<input type="password" id="TextPwd" name="TextPwd" placeholder="Password">
+				<input type="password" id="CnfPwd" name="CnfPwd" placeholder="Confirm Password">
+				
+				<h4>Select images in order for graphical password:</h4>
+				<br> 
+				<table id="imageTable">
+					<tr>
+						<td><img src="" alt="Image 1" onclick="openImageModal('img1')" id="img1"></td>
+						<td><img src="" alt="Image 2" onclick="openImageModal('img2')" id="img2"></td>
+						<td><img src="" alt="Image 3" onclick="openImageModal('img3')" id="img3"></td>
+						<td><img src="" alt="Image 4" onclick="openImageModal('img4')" id="img4"></td>
+						<td><img src="" alt="Image 5" onclick="openImageModal('img5')" id="img5"></td>
+						
+					</tr>
+					<tr>
+						<td><img src="" alt="Image 6" onclick="openImageModal('img6')" id="img6"></td>
+						<td><img src="" alt="Image 7" onclick="openImageModal('img7')" id="img7"></td>
+						<td><img src="" alt="Image 8" onclick="openImageModal('img8')" id="img8"></td>
+						<td><img src="" alt="Image 9" onclick="openImageModal('img9')" id="img9"></td>
+						<td><img src="" alt="Image 10" onclick="openImageModal('img10')" id="img10"></td>
+						
+					</tr>
+					<tr>
+						<td><img src="" alt="Image 11" onclick="openImageModal('img11')" id="img11"></td>
+						<td><img src="" alt="Image 12" onclick="openImageModal('img12')" id="img12"></td>
+						<td><img src="" alt="Image 13" onclick="openImageModal('img13')" id="img13"></td>
+						<td><img src="" alt="Image 14" onclick="openImageModal('img14')" id="img14"></td>
+						<td><img src="" alt="Image 15" onclick="openImageModal('img15')" id="img15"></td>
+					</tr>
+				</table>
+				<br>
+				<input type="hidden" id="imgPwd" name="imgPwd">
+				<input type="submit" value="Submit" class="btn btn-primary" style="margin-bottom: 20px;">
+		
+			</form>
+		</div>
+	</div>
+	  
+	<script>
+	// Array of image URLs
+	var images = ["/static/images/10.jpeg", "/static/images/11.jpeg", "/static/images/12.jpeg", "/static/images/13.jpeg", "/static/images/14.jpeg", "/static/images/15.jpeg", "/static/images/16.jpeg", "/static/images/17.jpeg", "/static/images/18.jpeg", "/static/images/19.jpeg", "/static/images/20.jpeg", "/static/images/21.jpeg", "/static/images/22.jpeg", "/static/images/23.jpeg", "/static/images/24.jpeg"] 
+
+	// Get all img tags within the table
+	var imgTags = document.querySelectorAll("#imageTable img");
+	
+	// Loop through the img tags and update the src attribute
+	for (var i = 0; i < imgTags.length; i++) {
+		imgTags[i].src = images[i];
+	}
+
+	</script>
+	  
+</body>
+</html>
